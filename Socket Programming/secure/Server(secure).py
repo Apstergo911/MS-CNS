@@ -35,8 +35,9 @@ def handle_client(cclient , addr):
     conn = sqlite3.connect("userdata.db")
     cur = conn.cursor()
 
+  
     cur.execute("SELECT * FROM userdata WHERE username  = ? AND password = ?",(username,password))
-
+    
     if cur.fetchall():
         cclient.send("loging seccessful".encode(FORMAT))
 
