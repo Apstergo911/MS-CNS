@@ -13,25 +13,6 @@ DISCONNECT_MESSAGE = "!DISCONNECT"
 server = socket.socket(socket.AF_INET , socket.SOCK_DGRAM)
 server.bind(ADDR)
 
-def handle_client(message ,addr):
-    message = message.decode(FORMAT)
-    for i in message:
-        if message == "":
-            send = "Username:".encode(FORMAT)
-            server.sendto( send , (addr))
-        message , addr = server.recvfrom(1024)
-        print("received")
-        username = message.decode(FORMAT)
-        print(f"[{addr}] {username}")
-
-    req2 = "Password:".encode(FORMAT)
-    server.sendto( req2 , (addr))
-    message , addr = server.recv(1024)
-    password = message
-    print(f"[{addr}] {password}")
-
-
-
     # password = hashlib.sha256(password).hexdigest()
     
 
@@ -53,7 +34,25 @@ def handle_client(message ,addr):
 print(f"server is running and listening on {SERVER}")
 while True:
     message , addr = server.recvfrom(1024)
-    threading.Thread(target=handle_client, args = (message , addr)).start()
+    message = message.decode(FORMAT)
+    for i in message:
+        if message == "":
+            send = "Username:".encode(FORMAT)
+            server.sendto( send , (addr))
+            message , addr = server.recvfrom(1024)
+            username = message.decode(FORMAT)
+            print(f"[{addr}] {username}")
+        else:
+            send = "Password:".encode(FORMAT)
+            server.sendto( send , (addr))
+            message , addr = server.recvfrom(1024)
+            password = message.decode(FORMAT)
+            print("received")
+            print(f"[{addr}] {password}")
+        
+
+
+    
 
 
             
