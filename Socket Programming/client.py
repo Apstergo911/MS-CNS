@@ -25,3 +25,9 @@ while (True):
     msg = f"{address} {servermessage}"
 
     print(msg)
+
+
+import hashlib
+def plain2Ciph(Plaintext):
+    Ciphertext = hashlib.sha256(Plaintext).hexdigest()
+    return Ciphertext
